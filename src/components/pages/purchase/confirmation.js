@@ -41,9 +41,9 @@ const Confirmation = () => {
 						order.items.map((item, idx) => (
 							<li key={idx} className="text-secondary-text">
 								{item.name} {item.quantity ? `x${item.quantity}` : ''}{' '}
-								{item.price ? `- $${item.price.toFixed(2)} each` : ''}
-								{item.price && item.quantity
-									? ` (Subtotal: $${(item.price * item.quantity).toFixed(2)})`
+								{item.unit_price ? `- $${item.unit_price.toFixed(2)} each` : ''}
+								{item.unit_price && item.quantity
+									? ` (Subtotal: $${(item.unit_price * item.quantity).toFixed(2)})`
 									: ''}
 							</li>
 						))

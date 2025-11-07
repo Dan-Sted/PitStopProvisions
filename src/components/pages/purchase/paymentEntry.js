@@ -58,9 +58,9 @@ const PaymentEntry = () => {
 								<li key={item.id} className="py-3 flex justify-between items-center">
 									<div>
 										<div className="font-medium text-primary-text">{item.name}</div>
-										{item.price != null && (
+										{item.unit_price != null && (
 											<div className="text-sm text-secondary-text">
-												${item.price.toFixed(2)} x {item.qty}
+												${item.unit_price.toFixed(2)} x {item.qty}
 											</div>
 										)}
 									</div>

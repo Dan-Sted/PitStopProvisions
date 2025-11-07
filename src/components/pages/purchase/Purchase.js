@@ -52,7 +52,9 @@ const Purchase = () => {
 								/>
 								<div className="text-left flex-1">
 									<div className="font-medium text-primary-text">{product.name}</div>
-									<div className="text-sm text-secondary-text">${product.price.toFixed(2)}</div>
+									<div className="text-sm text-secondary-text">
+										${product.unit_price.toFixed(2)}
+									</div>
 								</div>
 								<div className="flex items-center gap-3">
 									<button

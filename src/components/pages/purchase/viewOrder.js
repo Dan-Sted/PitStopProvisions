@@ -78,11 +78,11 @@ const ViewOrder = () => {
 										<div>
 											<div className="font-medium text-primary-text">{item.name}</div>
 											<div className="text-sm text-secondary-text">
-												${item.price.toFixed(2)} x {item.qty}
+												${item.unit_price.toFixed(2)} x {item.qty}
 											</div>
 										</div>
 										<div className="text-sm text-secondary-text font-semibold">
-											${(item.price * item.qty).toFixed(2)}
+											${(item.unit_price * item.qty).toFixed(2)}
 										</div>
 									</li>
 								))}

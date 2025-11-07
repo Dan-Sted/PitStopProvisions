@@ -112,7 +112,9 @@ const Home = () => {
 										className="w-full h-40 object-contain rounded mb-4"
 									/>
 									<h3 className="text-lg font-semibold text-primary-text">{p.name}</h3>
-									<p className="text-secondary-text mb-4">${p.price.toFixed(2)}</p>
+									{(() => {
+										return <p className="text-secondary-text mb-4">${p.unit_price.toFixed(2)}</p>;
+									})()}
 									<div className="mt-auto flex gap-2">
 										<button
 											className="flex-1 bg-primary-bg text-primary-text py-2 rounded hover:opacity-95"

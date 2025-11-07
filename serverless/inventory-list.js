@@ -12,7 +12,7 @@ module.exports.listItems = async (event) => {
 		const nameFilter = query.name ? String(query.name).toLowerCase() : null;
 
 		const pool = await getPool();
-		let sql = 'SELECT ID, ITEM_NUMBER, NAME, DESCRIPTION, AVAILABLE_QUANTITY, UNIT_PRICE FROM ITEM';
+		let sql = 'SELECT ITEM_NUMBER, ITEM_ID, NAME, AVAILABLE_QUANTITY, UNIT_PRICE FROM ITEM';
 		const params = [];
 		if (nameFilter) {
 			sql += ' WHERE LOWER(NAME) LIKE ?';

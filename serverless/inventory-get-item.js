@@ -17,7 +17,7 @@ module.exports.getItem = async (event) => {
 
 		const pool = await getPool();
 		const [rows] = await pool.execute(
-			'SELECT ID, ITEM_NUMBER, NAME, DESCRIPTION, AVAILABLE_QUANTITY, UNIT_PRICE FROM ITEM WHERE ITEM_NUMBER = ? LIMIT 1',
+			'SELECT ITEM_NUMBER, ITEM_ID, NAME, AVAILABLE_QUANTITY, UNIT_PRICE FROM ITEM WHERE ITEM_NUMBER = ? LIMIT 1',
 			[itemNumber]
 		);
 

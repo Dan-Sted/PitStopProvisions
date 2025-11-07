@@ -28,7 +28,7 @@ const Products = () => {
 									className="w-full h-40 object-contain rounded-md mb-4"
 								/>
 								<h2 className="text-xl font-semibold text-primary-text">{product.name}</h2>
-								<p className="text-secondary-text">${product.price.toFixed(2)}</p>
+								<p className="text-secondary-text">${product.unit_price.toFixed(2)}</p>
 							</div>
 						))}
 					</div>
