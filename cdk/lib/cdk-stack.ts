@@ -12,6 +12,17 @@ export class InventoryStack extends cdk.Stack {
 		// code asset pointing at the serverless folder (contains the handler JS files)
 		const codeAsset = lambda.Code.fromAsset(path.join(__dirname, '..', '..', 'serverless'));
 
+		// shared environment variables for all lambdas (keep as plain env vars for now)
+		const commonEnv: { [k: string]: string } = {
+			DB_HOST: 'pspdb.czy6kc8suww0.us-east-2.rds.amazonaws.com',
+			DB_PORT: '3306',
+			DB_USER: 'adminuser',
+			DB_PASS: 'adminpass',
+			DB_NAME: 'pspdb',
+			DB_CONN_LIMIT: '10',
+			INVENTORY_API: 'https://n1u3hvxmqf.execute-api.us-east-2.amazonaws.com/prod/inventory',
+		};
+
 		// Inventory list (list all / search)
 		const inventoryList = new lambda.Function(this, 'InventoryListFn', {
 			runtime: lambda.Runtime.NODEJS_18_X,
@@ -19,6 +30,7 @@ export class InventoryStack extends cdk.Stack {
 			code: codeAsset,
 			memorySize: 128,
 			timeout: cdk.Duration.seconds(10),
+			environment: commonEnv,
 		});
 
 		// Inventory get single item
@@ -28,6 +40,7 @@ export class InventoryStack extends cdk.Stack {
 			code: codeAsset,
 			memorySize: 128,
 			timeout: cdk.Duration.seconds(10),
+			environment: commonEnv,
 		});
 
 		// Simple REST API using API Gateway (proxy mapping)
@@ -81,6 +94,7 @@ export class InventoryStack extends cdk.Stack {
 			memorySize: 128,
 			timeout: cdk.Duration.seconds(10),
 			environment: {
+				...commonEnv,
 				INVENTORY_LIST_FUNCTION_NAME: inventoryList.functionName,
 				INVENTORY_GET_FUNCTION_NAME: inventoryGet.functionName,
 			},
