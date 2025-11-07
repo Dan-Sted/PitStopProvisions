@@ -107,7 +107,8 @@ const Purchase = () => {
 							Total Price: $
 							{inventory
 								.reduce(
-									(total, product, idx) => total + product.price * (order.buyQuantity[idx] || 0),
+									(total, product, idx) =>
+										total + product.unit_price * (order.buyQuantity[idx] || 0),
 									0
 								)
 								.toFixed(2)}
