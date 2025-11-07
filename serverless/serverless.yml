@@ -9,6 +9,12 @@ provider:
   stage: dev
   environment:
     INVENTORY_API: ${'https://n1u3hvxmqf.execute-api.us-east-2.amazonaws.com/prod/inventory'}
+    DB_HOST: pspdb.czy6kc8suww0.us-east-2.rds.amazonaws.com
+    DB_PORT: 3306
+    DB_USER: adminuser
+    DB_PASS: adminpass
+    DB_NAME: pspdb
+    DB_CONN_LIMIT: 10
 functions:
   inventoryList:
     handler: inventory-list.listItems
