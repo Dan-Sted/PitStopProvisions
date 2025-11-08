@@ -23,10 +23,9 @@ module.exports.listItems = async (event) => {
 		const [rows] = await pool.execute(sql, params);
 
 		const result = rows.map((r) => ({
-			id: r.ID,
+			id: r.ITEM_ID,
 			item_number: r.ITEM_NUMBER,
 			name: r.NAME,
-			description: r.DESCRIPTION,
 			available_quantity: r.AVAILABLE_QUANTITY,
 			unit_price: r.UNIT_PRICE,
 		}));

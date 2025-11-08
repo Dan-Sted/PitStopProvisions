@@ -29,14 +29,13 @@ module.exports.getItem = async (event) => {
 			};
 		}
 
-		const row = rows[0];
+		const r = rows[0];
 		const item = {
-			id: row.ID,
-			item_number: row.ITEM_NUMBER,
-			name: row.NAME,
-			description: row.DESCRIPTION,
-			available_quantity: row.AVAILABLE_QUANTITY,
-			unit_price: row.UNIT_PRICE,
+			id: r.ITEM_ID,
+			item_number: r.ITEM_NUMBER,
+			name: r.NAME,
+			available_quantity: r.AVAILABLE_QUANTITY,
+			unit_price: r.UNIT_PRICE,
 		};
 
 		return {

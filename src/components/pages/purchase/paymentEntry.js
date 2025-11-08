@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import productlist from '../../common/productlist';
+import { getInventory } from '../../../services/api';
 
 const PaymentEntry = () => {
 	const location = useLocation();
@@ -27,12 +27,26 @@ const PaymentEntry = () => {
 
 	const order = location && location.state && location.state.order;
 
+	const [inventory, setInventory] = useState([]);
+
+	useEffect(() => {
+		const fetch = async () => {
+			try {
+				const data = await getInventory();
+				setInventory(data);
+			} catch (err) {
+				console.error('Failed to load inventory in paymentEntry', err);
+			}
+		};
+		fetch();
+	}, []);
+
 	const purchased = useMemo(() => {
 		if (!order) return [];
-		return productlist
+		return inventory
 			.map((p, idx) => ({ ...p, qty: order.buyQuantity[idx] || 0 }))
 			.filter((item) => item.qty > 0);
-	}, [order]);
+	}, [order, inventory]);
 
 	if (!order) {
 		// redirect back to purchase if no order state
@@ -41,7 +55,10 @@ const PaymentEntry = () => {
 	}
 
 	const totalItems = purchased.reduce((s, it) => s + it.qty, 0);
-	const totalPrice = purchased.reduce((sum, item) => sum + (item.price || 0) * item.qty, 0);
+	const totalPrice = purchased.reduce((sum, item) => {
+		const price = item.unit_price ?? item.price ?? 0;
+		return sum + price * item.qty;
+	}, 0);
 
 	return (
 		<div className="min-h-screen bg-secondary-bg p-6">

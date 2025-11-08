@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getInventory } from '../../services/api';
+import { productImages } from '../common/product-images';
 
 const Home = () => {
 	const [featured, setFeatured] = useState([]);
@@ -65,7 +66,7 @@ const Home = () => {
 					</div>
 					<div className="flex justify-center lg:justify-end">
 						<img
-							src={require('../images/logo.png')}
+							src={require('../images/other-images/logo.png')}
 							alt="PitStopProvisions"
 							className="w-72 h-72 object-contain"
 						/>
@@ -107,7 +108,7 @@ const Home = () => {
 							{featured.map((p) => (
 								<div key={p.id} className="bg-primary-bg rounded-lg shadow p-4 flex flex-col">
 									<img
-										src={p.image}
+										src={productImages.get(p.id)}
 										alt={p.name}
 										className="w-full h-40 object-contain rounded mb-4"
 									/>

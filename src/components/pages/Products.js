@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getInventory } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+import { productImages } from '../common/product-images';
 
 const Products = () => {
 	const [inventory, setInventory] = useState([]);
@@ -23,7 +24,9 @@ const Products = () => {
 						{inventory.map((product) => (
 							<div key={product.id} className="bg-primary-bg rounded-lg shadow p-4">
 								<img
-									src={product.image}
+									src={
+										productImages.get(product.id) || require('../images/product-images/helmet.jpg')
+									}
 									alt={product.name}
 									className="w-full h-40 object-contain rounded-md mb-4"
 								/>

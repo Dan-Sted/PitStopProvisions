@@ -39,7 +39,7 @@ const AboutUs = () => {
 						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 							<div className="bg-primary-bg rounded-lg shadow p-4 text-center">
 								<img
-									src={require('../images/ceo.png')}
+									src={require('../images/other-images/ceo.png')}
 									alt="Executive"
 									className="w-24 h-24 mx-auto rounded-full mb-4"
 								/>
@@ -51,7 +51,7 @@ const AboutUs = () => {
 							</div>
 							<div className="bg-primary-bg rounded-lg shadow p-4 text-center">
 								<img
-									src={require('../images/cfo.png')}
+									src={require('../images/other-images/cfo.png')}
 									alt="Executive"
 									className="w-24 h-24 mx-auto rounded-full mb-4"
 								/>
@@ -64,7 +64,7 @@ const AboutUs = () => {
 							</div>
 							<div className="bg-primary-bg rounded-lg shadow p-4 text-center">
 								<img
-									src={require('../images/cro.png')}
+									src={require('../images/other-images/cro.png')}
 									alt="Executive"
 									className="w-24 h-24 mx-auto rounded-full mb-4"
 								/>

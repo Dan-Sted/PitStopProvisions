@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import productlist from '../../common/productlist';
-import { createOrder } from '../../../services/api';
+import { createOrder, getInventory } from '../../../services/api';
 
 const ViewOrder = () => {
 	const location = useLocation();
@@ -12,16 +11,32 @@ const ViewOrder = () => {
 	const payment = location && location.state && location.state.payment;
 	const shipping = location && location.state && location.state.shipping;
 
-	// Calculate purchased items with quantities
+	const [inventory, setInventory] = useState([]);
+	// Calculate purchased items with quantities (map inventory by index to order.buyQuantity)
+	useEffect(() => {
+		const fetch = async () => {
+			try {
+				const data = await getInventory();
+				setInventory(data);
+			} catch (err) {
+				console.error('Failed to load inventory in ViewOrder', err);
+			}
+		};
+		fetch();
+	}, []);
+
 	const purchased = useMemo(() => {
 		if (!order) return [];
-		return productlist
+		return inventory
 			.map((p, idx) => ({ ...p, qty: order.buyQuantity[idx] || 0 }))
 			.filter((item) => item.qty > 0);
-	}, [order]);
+	}, [order, inventory]);
 
 	const totalItems = purchased.reduce((s, it) => s + it.qty, 0);
-	const totalPrice = purchased.reduce((sum, item) => sum + (item.price || 0) * item.qty, 0);
+	const totalPrice = purchased.reduce((sum, item) => {
+		const price = item.unit_price ?? item.price ?? 0;
+		return sum + price * item.qty;
+	}, 0);
 
 	const cardCn = payment.cardNumber;
 	const cardExp = payment.expiration;
