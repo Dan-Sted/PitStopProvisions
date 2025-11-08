@@ -1,9 +1,7 @@
 TODO:
-- images on items, where do they go
 - load time for product / purchase?
 - get actual confirmation number set up?
 - maybe keep track of cart throughout different pages?
 - create docs page?
 - view order broken at item.unit_price.toFixed
-- get images set up
-- payment entry order summary broken
+- Change font?

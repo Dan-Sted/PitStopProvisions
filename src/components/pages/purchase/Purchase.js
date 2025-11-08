@@ -35,22 +35,19 @@ const Purchase = () => {
 
 	return (
 		<div className="min-h-screen bg-secondary-bg p-6">
-			<div className="max-w-2xl mx-auto">
+			<div className="max-w-6xl mx-auto">
 				<h1 className="text-2xl text-center font-semibold text-primary-text mb-4">
 					PitStopProvisions Products
 				</h1>
 				<form onSubmit={handleSubmit} className="grid gap-6">
-					<div className="grid grid-cols-1 gap-4">
+					<div className="grid grid-cols-2 gap-4">
 						{inventory.map((product, idx) => (
 							<div
 								key={product.id}
 								className="bg-primary-bg rounded-lg shadow p-4 flex items-center justify-between gap-x-4"
 							>
 								<img
-									src={
-										productImages.get(product.id) ||
-										require('../../images/product-images/helmet.jpg')
-									}
+									src={productImages.get(product.id)}
 									alt={product.name}
 									className="w-20 h-20 object-cover rounded-md mr-6"
 								/>
