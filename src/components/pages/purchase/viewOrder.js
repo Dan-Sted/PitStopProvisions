@@ -49,6 +49,14 @@ const ViewOrder = () => {
 	const shipState = shipping.state;
 	const shipZip = shipping.zip;
 
+	const [email, setEmail] = useState((shipping && (shipping.email || '')) || '');
+	const [emailTouched, setEmailTouched] = useState(false);
+	const isEmailValid = (() => {
+		if (!email) return false;
+		// simple email regex
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+	})();
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -58,13 +66,15 @@ const ViewOrder = () => {
 					quantity: item.qty,
 				})),
 				payment,
-				shipping,
+				// include email on shipping so backend can send confirmation if implemented
+				shipping: { ...shipping, email },
 			});
 			navigate('/purchase/confirmation', {
 				state: {
 					order: orderResponse,
 					payment,
-					shipping,
+					shipping: { ...shipping, email },
+					email,
 				},
 			});
 		} catch (error) {
@@ -174,8 +184,33 @@ const ViewOrder = () => {
 					</ul>
 				</div>
 				<form onSubmit={handleSubmit} className="card card-centered">
+					{/* Email for confirmation */}
+					<div className="mb-4 w-full">
+						<label className="block text-sm font-medium text-secondary-text mb-2">
+							Confirmation Email
+						</label>
+						<input
+							type="email"
+							name="confirmationEmail"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							onBlur={() => setEmailTouched(true)}
+							placeholder="you@example.com"
+							className="w-full px-3 py-2 rounded border border-secondary-text bg-secondary-bg text-primary-text"
+						/>
+						<p className="text-xs text-secondary-text mt-2">
+							We'll send an order confirmation to this email.
+						</p>
+						{emailTouched && !isEmailValid ? (
+							<p className="text-xs text-red-500 mt-2">Please enter a valid email address.</p>
+						) : null}
+					</div>
 					<div className="flex justify-center">
-						<button type="submit" className="btn-secondary hover:bg-primary-bg-hover">
+						<button
+							type="submit"
+							disabled={!isEmailValid}
+							className={`btn-secondary hover:bg-primary-bg-hover ${!isEmailValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+						>
 							Continue to confirmation
 						</button>
 					</div>

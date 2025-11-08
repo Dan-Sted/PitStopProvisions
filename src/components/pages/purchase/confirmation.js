@@ -6,6 +6,10 @@ const Confirmation = () => {
 	const order = location && location.state && location.state.order;
 	const payment = location && location.state && location.state.payment;
 	const shipping = location && location.state && location.state.shipping;
+	const email =
+		(location && location.state && location.state.email) ||
+		(shipping && (shipping.email || shipping.contactEmail)) ||
+		'';
 
 	const confirmationNumber = 1234;
 
@@ -61,6 +65,7 @@ const Confirmation = () => {
 				<p className="text-secondary-text">{shipping.name}</p>
 				<p className="text-secondary-text">{shipping.address}</p>
 				<p className="text-secondary-text">{`${shipping.city}, ${shipping.state} ${shipping.zip}`}</p>
+				{email ? <p className="text-secondary-text">Email: {email}</p> : null}
 
 				<h3 className="text-lg font-semibold text-secondary-text mt-4">Payment Information</h3>
 				<p className="text-secondary-text">{`Card ending in ${payment.cardNumber.slice(-4)}`}</p>
