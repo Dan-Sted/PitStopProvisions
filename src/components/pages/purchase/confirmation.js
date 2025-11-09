@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { useMemo } from 'react';
 
 const Confirmation = () => {
 	const location = useLocation();
@@ -11,13 +12,26 @@ const Confirmation = () => {
 		(shipping && (shipping.email || shipping.contactEmail)) ||
 		'';
 
-	const confirmationNumber = 1234;
+	// Get confirmation number from order response or generate a fallback
+	const confirmationNumber = order?.orderId || order?.id || Math.floor(Math.random() * 1000000);
 
-	// Calculate total price
-	const totalPrice =
-		order && order.items
-			? order.items.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 0), 0)
-			: 0;
+	// Get purchased items from the order state passed from viewOrder
+	const purchasedItems = useMemo(() => {
+		// The order response from API might have different structure
+		// Check if we have items in the expected format
+		if (order?.items && Array.isArray(order.items)) {
+			return order.items;
+		}
+		// Fallback: try to reconstruct from other data if available
+		return [];
+	}, [order]);
+
+	// Calculate total price from purchased items
+	const totalPrice = purchasedItems.reduce((sum, item) => {
+		const price = item.unit_price || item.price || 0;
+		const quantity = item.quantity || item.qty || 0;
+		return sum + price * quantity;
+	}, 0);
 
 	return (
 		<div className="min-h-screen bg-secondary-bg p-6">
@@ -41,13 +55,15 @@ const Confirmation = () => {
 
 				<h3 className="text-lg font-semibold text-secondary-text mt-4">Items Purchased</h3>
 				<ul style={{ paddingLeft: '1.2em' }}>
-					{order && order.items && order.items.length > 0 ? (
-						order.items.map((item, idx) => (
+					{purchasedItems && purchasedItems.length > 0 ? (
+						purchasedItems.map((item, idx) => (
 							<li key={idx} className="text-secondary-text">
-								{item.name} {item.quantity ? `x${item.quantity}` : ''}{' '}
-								{item.unit_price ? `- $${item.unit_price.toFixed(2)} each` : ''}
-								{item.unit_price && item.quantity
-									? ` (Subtotal: $${(item.unit_price * item.quantity).toFixed(2)})`
+								{item.name} {item.quantity ? `x${item.quantity}` : item.qty ? `x${item.qty}` : ''}{' '}
+								{item.unit_price || item.price
+									? `- $${(item.unit_price || item.price).toFixed(2)} each`
+									: ''}
+								{(item.unit_price || item.price) && (item.quantity || item.qty)
+									? ` (Subtotal: $${((item.unit_price || item.price) * (item.quantity || item.qty)).toFixed(2)})`
 									: ''}
 							</li>
 						))
@@ -63,7 +79,8 @@ const Confirmation = () => {
 
 				<h3 className="text-lg font-semibold text-secondary-text mt-4">Shipping Information</h3>
 				<p className="text-secondary-text">{shipping.name}</p>
-				<p className="text-secondary-text">{shipping.address}</p>
+				<p className="text-secondary-text">{shipping.addressLine1}</p>
+				{shipping.addressLine2 && <p className="text-secondary-text">{shipping.addressLine2}</p>}
 				<p className="text-secondary-text">{`${shipping.city}, ${shipping.state} ${shipping.zip}`}</p>
 				{email ? <p className="text-secondary-text">Email: {email}</p> : null}
 

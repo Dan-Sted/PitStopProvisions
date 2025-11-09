@@ -63,6 +63,8 @@ const ViewOrder = () => {
 			const orderResponse = await createOrder({
 				items: purchased.map((item) => ({
 					id: item.item_number,
+					name: item.name,
+					unit_price: item.unit_price,
 					quantity: item.qty,
 				})),
 				payment,
@@ -71,7 +73,15 @@ const ViewOrder = () => {
 			});
 			navigate('/purchase/confirmation', {
 				state: {
-					order: orderResponse,
+					order: {
+						...orderResponse,
+						items: purchased.map((item) => ({
+							id: item.item_number,
+							name: item.name,
+							unit_price: item.unit_price,
+							quantity: item.qty,
+						})),
+					},
 					payment,
 					shipping: { ...shipping, email },
 					email,
