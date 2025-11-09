@@ -64,9 +64,8 @@ const PaymentEntry = () => {
 		<div className="min-h-screen bg-secondary-bg p-6">
 			{/* Order Summary */}
 			<div className="max-w-3xl mx-auto">
-				<h1 className="text-2xl font-semibold text-primary-text mb-4">Order Summary</h1>
-
 				<div className="card">
+					<h1 className="text-2xl font-semibold text-primary-text mb-4">Order Summary</h1>
 					{purchased.length === 0 ? (
 						<p className="text-placeholder-color">No items selected.</p>
 					) : (
@@ -92,8 +91,8 @@ const PaymentEntry = () => {
 						<div className="font-semibold">{totalItems}</div>
 					</div>
 					<div className="mt-2 flex justify-between items-center">
-						<div className="text-secondary-text font-bold">Total Price</div>
-						<div className="font-bold text-lg">${totalPrice.toFixed(2)}</div>
+						<div className="text-primary-text text-xl font-semibold">Total Price</div>
+						<div className="font-bold text-primary-text text-xl">${totalPrice.toFixed(2)}</div>
 					</div>
 
 					<div className="mt-6 flex justify-end">
@@ -114,7 +113,7 @@ const PaymentEntry = () => {
 			{/* Payment form sits in its own max-width container to match Order Summary */}
 			<div className="max-w-3xl mx-auto mt-6">
 				<form onSubmit={handleSubmit} className="card">
-					<h2 className="text-lg font-medium mb-4">Payment Information</h2>
+					<h2 className="text-2xl font-semibold text-primary-text mb-4">Payment Information</h2>
 					<div className="space-y-4">
 						<div className="flex items-center gap-4">
 							<label className="w-36 sm:w-40 text-sm font-medium text-secondary-text">
