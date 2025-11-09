@@ -37,9 +37,9 @@ const Confirmation = () => {
 		<div className="min-h-screen bg-secondary-bg p-6">
 			{/* confirmation*/}
 			<div className="card card-centered">
-				<h2 className="text-xl font-semibold text-primary-text mb-4">Order Confirmation</h2>
+				<h2 className="text-primary-text text-xl font-semibold mb-8">Order Confirmation</h2>
 				<div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-					<div className="font-medium text-secondary-text" style={{ fontSize: '1.1rem' }}>
+					<div className="font-medium text-primary-text" style={{ fontSize: '1.1rem' }}>
 						Confirmation Number:
 					</div>
 					<div
@@ -53,38 +53,44 @@ const Confirmation = () => {
 					</div>
 				</div>
 
-				<h3 className="text-lg font-semibold text-secondary-text mt-4">Items Purchased</h3>
-				<ul style={{ paddingLeft: '1.2em' }}>
+				<h3 className="text-lg font-semibold text-primary-text mt-4">Items Purchased</h3>
+				<ul className="divide-y">
 					{purchasedItems && purchasedItems.length > 0 ? (
-						purchasedItems.map((item, idx) => (
-							<li key={idx} className="text-secondary-text">
-								{item.name} {item.quantity ? `x${item.quantity}` : item.qty ? `x${item.qty}` : ''}{' '}
-								{item.unit_price || item.price
-									? `- $${(item.unit_price || item.price).toFixed(2)} each`
-									: ''}
-								{(item.unit_price || item.price) && (item.quantity || item.qty)
-									? ` (Subtotal: $${((item.unit_price || item.price) * (item.quantity || item.qty)).toFixed(2)})`
-									: ''}
-							</li>
-						))
+						purchasedItems.map((item, idx) => {
+							const unitPrice = item.unit_price;
+							const qty = item.quantity;
+							return (
+								<li key={idx} className="py-3 flex justify-between items-center">
+									<div>
+										<div className="font-medium text-primary-text">{item.name}</div>
+										<div className="text-sm text-secondary-text">
+											${unitPrice.toFixed(2)} x {qty}
+										</div>
+									</div>
+									<div className="text-sm text-secondary-text font-semibold">
+										${(unitPrice * qty).toFixed(2)}
+									</div>
+								</li>
+							);
+						})
 					) : (
-						<li className="text-placeholder-color">No items found.</li>
+						<li className="text-placeholder-color py-3">No items found.</li>
 					)}
 				</ul>
 
 				<div className="mt-4 flex justify-between items-center">
-					<div className="text-secondary-text font-bold">Total Price</div>
-					<div className="font-bold text-lg">${totalPrice.toFixed(2)}</div>
+					<div className="text-primary-text text-xl font-semibold">Total Price</div>
+					<div className="text-primary-text text-xl font-semibold">${totalPrice.toFixed(2)}</div>
 				</div>
 
-				<h3 className="text-lg font-semibold text-secondary-text mt-4">Shipping Information</h3>
+				<h3 className="text-primary-text text-xl font-semibold mt-6">Shipping Information</h3>
 				<p className="text-secondary-text">{shipping.name}</p>
 				<p className="text-secondary-text">{shipping.addressLine1}</p>
 				{shipping.addressLine2 && <p className="text-secondary-text">{shipping.addressLine2}</p>}
 				<p className="text-secondary-text">{`${shipping.city}, ${shipping.state} ${shipping.zip}`}</p>
 				{email ? <p className="text-secondary-text">Email: {email}</p> : null}
 
-				<h3 className="text-lg font-semibold text-secondary-text mt-4">Payment Information</h3>
+				<h3 className="text-primary-text text-xl font-semibold mt-6">Payment Information</h3>
 				<p className="text-secondary-text">{`Card ending in ${payment.cardNumber.slice(-4)}`}</p>
 			</div>
 		</div>
