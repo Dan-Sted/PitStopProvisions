@@ -129,8 +129,10 @@ const ViewOrder = () => {
 							<div className="font-semibold">{totalItems}</div>
 						</div>
 						<div className="mt-2 flex justify-between items-center">
-							<div className="text-secondary-text font-bold">Total Price</div>
-							<div className="font-bold text-lg">${totalPrice.toFixed(2)}</div>
+							<div className="text-primary-text text-xl font-semibold">Total Price</div>
+							<div className="text-primary-text text-xl font-semibold">
+								${totalPrice.toFixed(2)}
+							</div>
 						</div>
 
 						<div className="mt-6 flex justify-end">
@@ -146,7 +148,7 @@ const ViewOrder = () => {
 
 				{/* Payment Information List */}
 				<div className="card card-centered">
-					<h2 className="text-xl font-semibold text-primary-text mb-4">Payment Information</h2>
+					<h2 className="text-2xl font-semibold text-primary-text mb-4">Payment Information</h2>
 					<ul className="space-y-3">
 						<li className="flex items-center">
 							<span className="font-medium text-secondary-text w-40">Card Number:</span>
@@ -169,7 +171,7 @@ const ViewOrder = () => {
 
 				{/* Shipping Information List */}
 				<div className="card card-centered">
-					<h2 className="text-xl font-semibold text-primary-text mb-4">Shipping Information</h2>
+					<h2 className="text-2xl font-semibold text-primary-text mb-4">Shipping Information</h2>
 					<ul className="space-y-3">
 						<li className="flex items-center">
 							<span className="font-medium text-secondary-text w-40">Name:</span>
@@ -196,7 +198,7 @@ const ViewOrder = () => {
 				<form onSubmit={handleSubmit} className="card card-centered">
 					{/* Email for confirmation */}
 					<div className="mb-4 w-full">
-						<label className="block text-sm font-medium text-secondary-text mb-2">
+						<label className="block text-2xl font-semibold text-primary-text mb-4">
 							Confirmation Email
 						</label>
 						<input

@@ -34,7 +34,7 @@ const ShippingEntry = () => {
 		<div className="min-h-screen bg-secondary-bg p-6">
 			<div className="max-w-3xl mx-auto mt-6">
 				<form onSubmit={handleSubmit} className="card">
-					<h2 className="text-lg font-medium text-primary-text mb-4">Shipping Information</h2>
+					<h2 className="text-2xl font-semibold text-primary-text mb-4">Shipping Information</h2>
 					<div className="space-y-4">
 						<div className="flex items-center gap-4">
 							<label className="w-36 sm:w-40 text-sm font-medium text-secondary-text">Name:</label>
