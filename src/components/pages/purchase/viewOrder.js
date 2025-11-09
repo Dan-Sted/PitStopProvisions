@@ -62,7 +62,7 @@ const ViewOrder = () => {
 		try {
 			const orderResponse = await createOrder({
 				items: purchased.map((item) => ({
-					id: item.id,
+					id: item.item_number,
 					quantity: item.qty,
 				})),
 				payment,
